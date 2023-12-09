@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="assets/img/logo/gg.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="assets/css/subs-login.css">
+    <link rel="stylesheet" href="assets/css/styles.css" />
+
+    <title>GlobeGaze</title>
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <header>
+      <div class="header-container-1">
+        <div class="head-1 container">
+          <div class="left">
+            <img src="assets/img/logo/gg.png" alt="" style="width: 6%;" />
+          </div>
+          <div class="right">
+            <button class="subs" id="open-subscribe-form-main"><p>Subscribe</p></button>
+            <button class="login"><i class="fa-solid fa-user-large"><span>Log In</span></i></button>
+          </div>
+        </div>
+      </div>
+  
+      <div class="header-container-2">
+        <div class="head-2 container">
+          <div class="left">
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="newstopic.html" id="lifestyle" class="nav-link" data-topic="lifestyle" onclick="onNavItemClick('lifestyle')">Lifestyle</a></li>
+              <li><a href="newstopic.html" id="technology" class="nav-link" data-topic="technology" onclick="onNavItemClick('technology')">Technology</a></li>
+            </ul>
+          </div>
+          <div class="center">
+            <h1>GlobeGaze</h1>
+          </div>
+          <div class="right">
+            <ul>
+              <li><a href="newstopic.html" id="sports" onclick="onNavItemClick('sports')">Sports</a></li>
+              <li><a href="newstopic.html" id="entertainment" onclick="onNavItemClick('entertainment')">Entertainment</a></li>
+              <li><a href="newstopic.html" id="politics" onclick="onNavItemClick('politics')">Politics</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    
+      <div class="mobile-header">
+        <div class="left">
+          <button><i class="fa-solid fa-bars"></i></button>
+        </div>
+        <div class="right">
+          <div class="logo">
+            <h1>GlobeGaze</h1>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="offconvas">
+        <div class="overlay"></div>
+        <div class="content">
+          <div class="close">&times;</div>
+          <div class="divider"></div>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="newstopic.html" class="nav-link" data-topic="lifestyle" onclick="onNavItemClick('lifestyle')">Lifestyle</a></li>
+            <li><a href="newstopic.html" class="nav-link" data-topic="technology" onclick="onNavItemClick('technology')">Technology</a></li>
+            <li><a href="newstopic.html" class="nav-link" data-topic="sports" onclick="onNavItemClick('sports')">Sports</a></li>
+            <li><a href="newstopic.html" class="nav-link" data-topic="entertainment" onclick="onNavItemClick('entertainment')">Entertainment</a></li>
+            <li><a href="newstopic.html" class="nav-link" data-topic="politics" onclick="onNavItemClick('politics')">Politics</a></li>
+            <div class="divider"></div>
+            <div class="follow">
+              <button class="subs-mobile" id="open-subscribe-form"><p>Subscribe</p></button>
+              <button class="login-mobile"><i class="fa-solid fa-user-large"><span>Log In</span></i></button>
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUBSCRIBE -->
+    <div class="subscribe-form">
+      <div class="right">
+        <h2>Subscribe to GlobeGaze Today</h2>
+        <p>Join now to unlock a wealth of knowledge on a journey to enlightenment with GlobeGaze.</p>
+        <div class="form">
+          <div class="input">
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" placeholder="Enter your email" required>
+          </div>
+          <div class="button">
+            <button type="button" onclick="subscribe()">Subscribe</button>
+          </div>
+        </div>
+        <p id="subscription-message"></p>
+      </div>
+      <button class="close-btn" onclick="closeSubscribeForm()">&times;</button>
+    </div>
+
+    <!-- LOGIN/REGISTRASI FORM -->
+    <div class="form-popup">
+      <i class="close-btn fa-solid fa-xmark"></i>
+        <div class="form-box login">
+        <div class="form-content">
+          <h2>log in</h2>
+          <form action="#" id="login-form" class="log">
+            <div class="input-data">
+              <input type="text" id="email" required>
+              <label for="">Email</label>
+            </div>
+              <div class="input-data">
+                <input type="password" name="password" id="password" required>
+                <label for="">Password</label>
+              </div>
+              <button type="submit">Log In</button>
+          </form>
+          <div class="bottom-link">
+            Don't have an account?
+            <a href="#" id="regis-link">Sign Up</a>     
+          </div>
+        </div>
+      </div>
+
+      <div class="form-box signup">
+        <div class="form-content">
+          <h2>sign up</h2>
+          <form action="#" id="regis-form" class="log">
+            <div class="input-data">
+              <input type="text" name="name" id="name" required>
+              <label for="">Name</label>
+            </div>
+            <div class="input-data">
+              <input type="text" id="email" required>
+              <label for="">Email</label>
+            </div>
+              <div class="input-data">
+                <input type="password" name="password" id="password" required>
+                <label for="">Password</label>
+              </div>
+              <button type="submit">Sign Up</button>
+          </form>
+          <div class="bottom-link">
+            Already have an account?
+            <a href="#" id="login-link">Log In</a>     
+          </div>
+        </div>
+      </div>
+    </div>
+   
+    <!-- TRENDING NEWS -->
+    <div data-aos="fade-down"  data-aos-duration="750">
+      <div class="container-2">
+       <nav>
+         <div class="trending-1">
+           <div class="trend">
+             <div class="left-1">
+              <a href="newscontent/trend1.html">
+               <img src="assets/img/trending/1.png" alt="gb 1" />
+               <h3 class="heading-1">How F1 plays into Las Vegas' six-year rise as a sports city</h3>
+              </a>
+               <p>Nate Saunders</p>
+               <div class="divider"></div>
+             </div>
+             <div class="left-2">
+              <a href="newscontent/trend2.html">
+               <img src="assets/img/trending/2.png" alt="gb 2" />
+               <h3 class="heading-2">Chris Evans Avengers Return, as if He Could Say Anything Else</h3>
+              </a>
+               <p>Germain Lussier</p>
+               <div class="divider"></div>
+             </div>
+           </div>
+         </div>
+       </nav>
+  
+       <main>
+         <div class="trending-2">
+           <div class="trend">
+             <div class="center">
+              <a href="newscontent/trend3.html">
+               <img class="primary" src="assets/img/trending/3.png" alt="gb 3" />
+               <h3 class="heading-3">Sen. Joe Manchin announces he won't seek reelection in 2024</h3>
+               <h6>West Virginia Democrat Joe Manchin will not seek reelection to the Senate in 2024, Democrats have a narrow majority and face and uphill battle to retain his seat.</h6>
+              </a>
+               <div class="wrt">
+                 <img src="assets/img/trending/p-1.png" alt="" />
+                 <p>Deirdre Walsh</p>
+               </div>
+             </div>
+           </div>
+         </div>
+       </main>
+       
+       <aside>
+         <div class="trending-3">
+           <div class="trend">
+             <div class="right-1">
+              <a href="newscontent/trend4.html">
+               <img src="assets/img/trending/4.png" alt="gb 4" />
+               <h3 class="heading-4">The Verge’s 2023 gaming and entertainment holiday gift guide</h3>
+              </a>
+               <p>Antonio G. </p>
+               <div class="divider"></div>
+             </div>
+             <div class="right-2">
+              <a href="newscontent/trend5.html">
+               <img src="assets/img/trending/5.png" alt="gb 5" />
+               <h3 class="heading-5">Amazon’s Answer to ChatGPT Is a Workplace Assistant Called Q</h3>
+              </a>
+               <p>Will Knight</p>
+               <div class="divider"></div>
+             </div>
+           </div>
+         </div>
+       </div>
+     </aside>
+   </div>
+ </div>
+
+    <!-- RECENT NEWS -->
+    <div class="recentNews">
+        <p class="head">Recent News</p>
+        <div class="divider"></div>
+        <div class="cards">
+            <div class="card card1">
+                <div class="picture">
+                    <img src="assets/img/recent/1.png" alt="">
+                </div>
+                <div class="details">
+                    <h3 onclick="window.location.href='newscontent/recent1.html'">Ukraine war: Fierce row erupts over 2024 election</h3>
+                    <p>Politics</p>
+                </div>
+            </div>
+            <div class="card card2">
+                <div class="picture">
+                    <img src="assets/img/recent/2.png" alt="">
+                </div>
+                <div class="details">
+                    <h3 onclick="window.location.href='newscontent/recent2.html'">The 3D-Printed Bharata Bracelet Is Inspired by Ethnic</h3>
+                    <p>Technology</p>
+                </div>
+            </div>
+          
+            <div class="card card3">
+                <div class="picture">
+                    <img src="assets/img/recent/3.png" alt="">
+                </div>
+                <div class="details">
+                    <h3 onclick="window.location.href='newscontent/recent3.html'">Iowa's Caitlin Clark stormed the sports world: What's next?</h3>
+                    <p>Sports</p>
+                </div>
+            </div>
+          
+          <div class="card card4">
+              <div class="picture">
+                  <img src="assets/img/recent/4.png" alt="">
+              </div>
+              <div class="details">
+                  <h3 onclick="window.location.href='newscontent/recent4.html'">Revolut rivoluziona i piani a pagamento: accesso agli abbonamenti lifestyle</h3>
+                  <p>Lifestyle</p>
+              </div>
+          </div>
+          <div class="card card5">
+              <div class="picture">
+                  <img src="assets/img/recent/5.png" alt="">
+              </div>
+              <div class="details">
+                  <h3 onclick="window.location.href='newscontent/recent5.html'">Disney will soon own all of Hulu. How the company got here and what's next.</h3>
+                  <p>Entertainment</p>
+              </div>
+          </div>
+          <div class="card card6">
+              <div class="picture">
+                  <img src="assets/img/recent/6.png" alt="">
+              </div>
+              <div class="details">
+                  <h3 onclick="window.location.href='newscontent/recent6.html'">As Israel-Hamas war flares, chaos grips Britain with Braverman sacked</h3>
+                  <p>Politics</p>
+              </div>
+          </div>
+        </div>
+    </div>
+
+   <!-- DON'T MISS -->
+    <div class="dontmiss">
+      <h1 class="head">Don't Miss</h1>
+      <div class="divider"></div>
+      <div class="wrapping">
+        <div class="textblock">
+          <h1 class="heading">Herman Miller’s beloved OE1 furniture is back and even better for hybrid work</h1>
+          <h4 class="sub-heading"> Rebecca Barker</h4>
+          <p>When design studio Industrial Facility partnered with Herman Miller to launch the first iteration of its OE1 line in 2021, the debate over how COVID-19 would impact the future of work was alive and well. 
+            Now, two years later, we seem to have our answer: Most people who once commuted into the office five days a week have adapted to a hybrid lifestyle, where work can take place from anywhere.</p>
+          <a href="newscontent/dontmiss.html"><i></i><span>Read more</span></a>
+        </div>
+        <img src="assets/img/dontmiss/download (5).jpeg" alt="">
+      </div>
+    </div>
+
+   <!-- FOOTER -->
+   <div class="footer">
+    <div class="gg">
+      <h1>GlobeGaze</h1>
+      <p>"Breaking Boundaries, Connecting Continents: Your Window to the World." - Jakarta, Group 31</p>
+      <ul class="social">
+        <li><a class="ig" href="https://instagram.com/thisisglobegaze?igshid=OGQ5ZDc2ODk2ZA"><i class="fa-brands fa-instagram"></i></a></li>
+        <li><a class="linked" href="https://www.linkedin.com/in/globe-gaze-75093b299/"><i class="fa-brands fa-linkedin-in"></i></a></li>
+        <li><a class="twit" href="https://twitter.com/thisisglobegaze?t=G5w4d26cux9I01fbd0xi0A&s=09"><i class="fa-brands fa-x-twitter"></i></a></li>
+        <li><a class="fb" href="https://www.facebook.com/profile.php?id=61553347523426"><i class="fa-brands fa-facebook-f"></i></a></li>
+      </ul>
+    </div>
+    <div class="links">
+      <h2>Company</h2>
+      <ul>
+        <li>
+          <a href="aboutus.html">About Us</a>
+        </li>
+        <li>
+          <a href="contact.html">Contact Us</a>
+        </li>
+        <li>
+          <a href="privacy.html">Privacy Policy</a>
+        </li>
+        <li>
+          <a href="workatgg.html">Work at GlobeGaze</a>
+        </li>
+      </ul>
+    </div>
+    <div class="links">
+      <h2>Topics</h2>
+      <ul>
+        <li>
+          <a href="newstopic.html" class="nav-link" data-topic="lifestyle" onclick="onNavItemClick('lifestyle')">Lifestyle</a>
+        </li>
+        <li>
+          <a href="newstopic.html" class="nav-link" data-topic="technology" onclick="onNavItemClick('technology')">Technology</a>
+        </li>
+        <li>
+          <a href="newstopic.html" class="nav-link" data-topic="sports" onclick="onNavItemClick('sports')">Sports</a>
+        </li>
+        <li>
+          <a href="newstopic.html" class="nav-link" data-topic="entertainment" onclick="onNavItemClick('entertainment')">Entertainment</a>
+        </li>
+        <li>
+          <a href="newstopic.html" class="nav-link" data-topic="politics" onclick="onNavItemClick('lifestyle')">Politics</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="copyright">
+    <p class="copy">Copyright</p>
+    <i class="fa-regular fa-copyright"></i>
+    <p>GlobeGaze 2023. RevoU X MSIB Batch 5</p>
+  </div>
+
+  <!-- AOS JS -->
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+
+  <!-- MAIN JS -->
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/newstopic.js"></script>
+
+  <!-- LOGIN JS -->
+  <script src="assets/js/login.js"></script>
+
+ 
+ </body>
+</html>
