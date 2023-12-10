@@ -1,41 +1,37 @@
 const backendUrl = 'https://be-2-jakarta-31-production.up.railway.app/news';
+const section = document.querySelector("section");
 
-async function fetchData() {
-  try{
-    const response = await fetch(backendUrl)
-    const { payload: { datas: { articles } } } = await response.json(); 
-    displaySelectedNews(articles)
-  }catch(error){
-    console.error('error fetching from backend', error);
-  }
+function fetchData(topic) {
+  return fetch(`${backendUrl}/${topic}`)
+    .then(response => response.json())
+    .then(data => data.payload.datas.articles)
+    .catch(error => {
+      console.error('Error fetching from backend', error);
+      return [];
+    });
 }
 
-function renderSection(arr) {
-  
-  let section = document.querySelector("section");
+function renderSection(articles) {
   let sectionHTML = "";
 
-  // Check if arr is defined and has a length
-  if (arr && arr.articles && Array.isArray(arr.articles) && arr.articles.length > 0) {
-    for (let i = 0; i < arr.articles.length; i++) {
-      if (arr.articles[i].urlToImage) {
-        const cutDescription = arr.articles[i].description ? arr.articles[i].description.slice(0, 85) : "";
+  if (articles.length > 0) {
+    articles.forEach(article => {
+      if (article.urlToImage) {
+        const cutDescription = article.description ? article.description.slice(0, 85) : "";
         sectionHTML += `
-        <div class="grid">
-          <img src="${arr.articles[i].urlToImage}" alt="News Image">
-          <div class="souda">
-            <p>${arr.articles[i].source?.name}</p>
-            <span> • </span>
-            <p>${new Date(arr.articles[i].publishedAt).toLocaleDateString()}</p>
+          <div class="grid">
+            <img src="${article.urlToImage}" alt="News Image">
+            <div class="souda">
+              <p>${article.source?.name}</p>
+              <span> • </span>
+              <p>${new Date(article.publishedAt).toLocaleDateString()}</p>
+            </div>
+            <h4>${article.title}</h4>
+            <div class="desc">${cutDescription}</div>
           </div>
-          <h4>${arr.articles[i].title}</h4>
-          <div class="desc">
-            ${cutDescription}
-          </div>
-        </div>
-      `;
+        `;
       }
-    }
+    });
   } else {
     sectionHTML = "<p>No articles found.</p>";
   }
@@ -44,25 +40,17 @@ function renderSection(arr) {
 
   document.querySelectorAll(".grid").forEach((grid, index) => {
     grid.addEventListener("click", () => {
-      displaySelectedNews(arr.articles[index], section);
+      displaySelectedNews(articles[index], section);
     });
   });
 }
 
 async function fetchAndRenderData(topic) {
-  const query = encodeURIComponent(topic);
   try {
-    const data = await fetchAndRenderData(query);
-
-    if (data && data.articles) {
-      renderSection(data);
-    } else {
-      console.error("Invalid data structure or empty articles array:", data);
-      // Handle the error or provide a default behavior
-    }
+    const articles = await fetchData(encodeURIComponent(topic));
+    renderSection(articles);
   } catch (error) {
     console.error("Error fetching and rendering data:", error);
-    // Handle the error or provide a default behavior
   }
 }
 
@@ -74,40 +62,32 @@ function getTopicFromSessionStorage() {
   return sessionStorage.getItem("selectedTopic");
 }
 
-const defaultTopic = "lifestyle";
-const storedTopic = getTopicFromSessionStorage() || defaultTopic;
-fetchAndRenderData(storedTopic);
-setTopicInSessionStorage(storedTopic);
+function init() {
+  const defaultTopic = "science";
+  const storedTopic = getTopicFromSessionStorage() || defaultTopic;
+  fetchAndRenderData(storedTopic);
+  setTopicInSessionStorage(storedTopic);
 
-const topics = ["lifestyle", "technology", "sports", "entertainment", "politics"];
+  const topics = ["science", "technology", "sport", "entertainment", "health"];
 
-topics.forEach((topic) => {
-  document.getElementById(topic).addEventListener("click", function () {
-    fetchAndRenderData(topic);
-    setTopicInSessionStorage(topic);
+  topics.forEach((topic) => {
+    document.getElementById(topic).addEventListener("click", function () {
+      fetchAndRenderData(topic);
+      setTopicInSessionStorage(topic);
+    });
   });
-});
 
-document.querySelectorAll(".nav-link").forEach((navLink) => {
-  navLink.addEventListener("click", function () {
-    const topic = this.getAttribute("data-topic");
-    fetchAndRenderData(topic);
-    setTopicInSessionStorage(topic);
+  document.querySelectorAll(".nav-link").forEach((navLink) => {
+    navLink.addEventListener("click", function () {
+      const topic = this.getAttribute("data-topic");
+      fetchAndRenderData(topic);
+      setTopicInSessionStorage(topic);
+    });
   });
-});
-
-function onNavItemClick() {
-  const topic = this.getAttribute("data-topic");
-  fetchAndRenderData(topic);
-  setTopicInSessionStorage(topic);
 }
 
-function displaySelectedNews(articles) {
-  const section = document.querySelector("section");
-  section.innerHTML = ""; 
-
-  articles.forEach(article => {
-  section.innerHTML += `
+function displaySelectedNews(article) {
+  section.innerHTML = `
     <div class="news-content">
       <h1 class="heading">${article.title}</h1>
       <p class="date">${new Date(article.publishedAt).toLocaleString("en-US", { timeZone: "Asia/Jakarta" })}</p>
@@ -117,7 +97,6 @@ function displaySelectedNews(articles) {
       <p class="content"> ${article.content}</p>
     </div>
   `;
-  });
 }
 
-fetchData();
+document.addEventListener("DOMContentLoaded", init);
