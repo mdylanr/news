@@ -1,14 +1,17 @@
-const API_KEY = "78667e112f1947cb964b5e3f4845b488";
-const url = "https://newsapi.org/v2/everything?q=";
+const backendUrl = 'https://be-2-jakarta-31-production.up.railway.app/news';
 
-async function fetchData(topic) {
-  const query = encodeURIComponent(topic);
-  const res = await fetch(`${url}${query}&apiKey=${API_KEY}`);
-  const data = await res.json();
-  return data;
+async function fetchData() {
+  try{
+    const response = await fetch(backendUrl)
+    const { payload: { datas: { articles } } } = await response.json(); 
+    displaySelectedNews(articles)
+  }catch(error){
+    console.error('error fetching from backend', error);
+  }
 }
 
 function renderSection(arr) {
+  
   let section = document.querySelector("section");
   let sectionHTML = "";
 
@@ -49,7 +52,7 @@ function renderSection(arr) {
 async function fetchAndRenderData(topic) {
   const query = encodeURIComponent(topic);
   try {
-    const data = await fetchData(query);
+    const data = await fetchAndRenderData(query);
 
     if (data && data.articles) {
       renderSection(data);
@@ -99,9 +102,12 @@ function onNavItemClick() {
   setTopicInSessionStorage(topic);
 }
 
-function displaySelectedNews(article) {
+function displaySelectedNews(articles) {
   const section = document.querySelector("section");
-  section.innerHTML = `
+  section.innerHTML = ""; 
+
+  articles.forEach(article => {
+  section.innerHTML += `
     <div class="news-content">
       <h1 class="heading">${article.title}</h1>
       <p class="date">${new Date(article.publishedAt).toLocaleString("en-US", { timeZone: "Asia/Jakarta" })}</p>
@@ -111,4 +117,7 @@ function displaySelectedNews(article) {
       <p class="content"> ${article.content}</p>
     </div>
   `;
+  });
 }
+
+fetchData();
